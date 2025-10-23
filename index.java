@@ -140,6 +140,12 @@ public class index {
         return total_cost;
     }
 
+    public static float profit_calculation(float cost ) {
+        float profit = cost * 25/100;
+        return profit;
+        
+    }
+
 
 
 //............................end of the methods for solve maths part..............................

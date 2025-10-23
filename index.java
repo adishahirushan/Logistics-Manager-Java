@@ -124,6 +124,11 @@ public class index {
         return time;
     }
 
+    public static float fuel_consumption(int D, int E) {
+        float fuel_Used = D / E;
+        return fuel_Used;
+    }
+
 
 
 //............................end of the methods for solve maths part..............................

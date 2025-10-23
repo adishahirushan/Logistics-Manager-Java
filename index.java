@@ -6,13 +6,15 @@ public class index {
         boolean repeater_1 = true;
 
         // 1st menu.... start from here....
-        while (repeater_1) {           
+        while (repeater_1) {  
+            System.out.println(" ");  
+            System.out.println("Welcome to delever System");       
             System.out.println(" ");
             System.out.println(".....main menu..... ");
             System.out.println("1. I'm customer");
             System.out.println("2. I'm employer");
             System.out.println("3. exit");
-            System.out.println("enter choice number : ");
+            System.out.print("enter choice number : ");
             int choice_no_1 = sc.nextInt(); 
 
             if (choice_no_1 == 1) {
@@ -31,9 +33,25 @@ public class index {
 //............................this methods call from main menu.....................................
 
     public static void customer() {
-        System.out.println("costomer check");
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Welcome to costomer aria");
+        System.out.println();
+        System.out.print("do you want to delever order Yes/No : ");
+        String choice_no_3 = sc.next();
+        choice_no_3 = choice_no_3.toUpperCase();
+        char choice_no_3_1 = choice_no_3.charAt(0);
+        
+        if (choice_no_3_1 == 'Y' ){ //we don't use .equal becouse this is char data type variable it work with == with ''
+            placeTheOder();
+        }
+        else{
+            System.out.println("Sorry costormers only can delever order from us. If you want to delever oder from us plz try again. Thank you.");
+        }
+    
         
     }
+
     public static void employer() {
 
         Scanner sc = new Scanner(System.in);
@@ -46,7 +64,7 @@ public class index {
             System.out.println("2. Delivery Records");
             System.out.println("3. Performance Reports");
             System.out.println("4. exit from employer menu");
-            System.out.println("enter choice number : ");
+            System.out.print("enter choice number : ");
 
             int choice_no_2 = sc.nextInt();
 
@@ -84,4 +102,11 @@ public class index {
 
 //............................end of methods call by employer manu.................................
 
+//............................this methods call from employer menu.................................
+    public static void placeTheOder() {
+        System.out.println("check");
+        
+    }
+
+//............................end of methods call by employer manu.................................
 }

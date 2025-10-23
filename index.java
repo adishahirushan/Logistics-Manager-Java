@@ -1,5 +1,9 @@
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
 import java.io.File;                // For file creation, deletion, and metadata
 import java.io.FileReader;          // For reading character files
 import java.io.FileWriter;          // For writing character files
@@ -16,6 +20,8 @@ public class index {
 //............................main menu start from here............................................
         Scanner sc = new Scanner(System.in);
         boolean repeater_1 = true;
+        String[][] arr_route = new String[31][31];
+        read_route_data_to_array(arr_route);
 
         while (repeater_1) {  
             System.out.println(" ");  
@@ -160,4 +166,90 @@ public class index {
 
 
 //............................end of the methods for solve maths part..............................
+
+    public static void read_route_data_to_array(String[][] arr_route) {
+        try (BufferedReader br = new BufferedReader(new FileReader("routes.txt"))) {
+            String line;
+            int row = 0;
+
+            while ((line = br.readLine()) != null && row < 31) {
+                String[] values = line.split(",");
+                for (int col = 0; col < 31 && col < values.length; col++) {
+                    String value = values[col].trim().replace("\"", "");
+                    arr_route[row][col] = value.equalsIgnoreCase("null") ? null : value;
+                }
+                row++;
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading routes.txt: " + e.getMessage());
+        }
+
+        // Optional: Print the array to verify
+        
+    }
+
+    public static void display_distance(String[][] arr_route) {
+        System.out.println();
+        System.out.println("_______________________________________________________________________________________________________________________________________");
+        
+        // Print rows with row labels and aligned cells
+        for (int i = 0; i < 31; i++) {
+            
+            if (i == 1){
+                System.out.println("|_____|______________|_________________________________________________________________________________________________________________|");
+            }
+            
+            if (arr_route[i][0] == null || arr_route[i][0].equalsIgnoreCase("null")) {
+                continue; // skip row if first cell is "null"
+            }
+            System.out.print("|");
+            System.out.printf("%3d) ", i); // row label
+
+            for (int j = 0; j < 31; j++) {
+                
+                String cell = arr_route[i][j];
+                if(i == 0){
+                if(j == 0){
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf("%-14s", ""); // empty cell
+                } else {
+                    System.out.print("|");
+                    System.out.printf("%-14s", cell); // aligned cell
+                    System.out.printf("%-4s", "|"); 
+                }}
+                else{
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf("%-5s", ""); // empty cell
+                } else {
+                    
+                    if(arr_route[i + 1][j] == null  ){}
+                    else{System.out.printf("%-5s", j);} // aligned cell
+                }}
+                }else{
+                    if(j == 0){
+                System.out.print("|");
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf("%-14s", ""); // empty cell
+                } else {
+                    System.out.printf("%-14s", cell); // aligned cell
+                    System.out.printf("%-4s", "|"); 
+                }}
+                else{
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf(""); // empty cell
+                } else {
+                    System.out.printf("%-5s", cell); // aligned cell
+                }}
+                }
+            }
+            System.out.print("|"); 
+            System.out.println();
+        }
+        System.out.println("|_____|______________|_________________________________________________________________________________________________________________|");
+        
+    }
+
+
+
+
 }

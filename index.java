@@ -108,6 +108,7 @@ public class index {
         System.out.println("check");
         
     }
+    
 
 
 
@@ -127,6 +128,10 @@ public class index {
     public static float fuel_consumption(int D, int E) {
         float fuel_Used = D / E;
         return fuel_Used;
+    }
+    public static float fuel_cost(int fuel_Used, float F) {
+        float time = fuel_Used * F;
+        return time;
     }
 
 

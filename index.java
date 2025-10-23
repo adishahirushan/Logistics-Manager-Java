@@ -129,9 +129,15 @@ public class index {
         float fuel_Used = D / E;
         return fuel_Used;
     }
-    public static float fuel_cost(int fuel_Used, float F) {
-        float time = fuel_Used * F;
-        return time;
+
+    public static float fuel_cost(float fuel_Used, float F) {
+        float fuel_Used_cost = fuel_Used * F;
+        return fuel_Used_cost;
+    }
+
+    public static float total_operational_cost(float cost, float fuel_Used_cost) {
+        float total_cost = cost + fuel_Used_cost ;
+        return total_cost;
     }
 
 

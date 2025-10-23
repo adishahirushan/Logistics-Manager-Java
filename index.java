@@ -1,5 +1,16 @@
 import java.util.Scanner;
+
+import java.io.File;                // For file creation, deletion, and metadata
+import java.io.FileReader;          // For reading character files
+import java.io.FileWriter;          // For writing character files
+import java.io.BufferedReader;      // For efficient reading
+import java.io.BufferedWriter;      // For efficient writing
+import java.io.FileInputStream;     // For reading binary files
+import java.io.FileOutputStream;    // For writing binary files
+import java.io.IOException;         // For handling IO exceptions
+
 public class index {
+    
     public static void main(String[] args) {
 
 //............................main menu start from here............................................
@@ -109,9 +120,6 @@ public class index {
         
     }
     
-
-
-
 //............................end of methods call by employer manu.................................
 
 //............................methods for solve maths part(functions)..............................

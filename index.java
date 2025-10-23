@@ -119,6 +119,11 @@ public class index {
         return cost;
     }
 
+    public static float estimated_time(int D, int S) {
+        float time = D / S;
+        return time;
+    }
+
 
 
 //............................end of the methods for solve maths part..............................

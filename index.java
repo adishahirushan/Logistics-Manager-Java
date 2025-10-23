@@ -1,11 +1,11 @@
 import java.util.Scanner;
 public class index {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
 
+//............................main menu start from here............................................
+        Scanner sc = new Scanner(System.in);
         boolean repeater_1 = true;
 
-        // 1st menu.... start from here....
         while (repeater_1) {  
             System.out.println(" ");  
             System.out.println("Welcome to delever System");       
@@ -30,6 +30,9 @@ public class index {
         }
 
     }
+//............................main menu end from here..............................................
+
+
 //............................this methods call from main menu.....................................
 
     public static void customer() {
@@ -84,6 +87,14 @@ public class index {
 
 //............................end of methods call by main manu.....................................
 
+//............................this methods call from costomer menu.................................
+    public static void placeTheOder() {
+        System.out.println("check");
+        
+    }
+
+//............................end of methods call by costomer manu.................................
+
 //............................this methods call from employer menu.................................
     public static void city_management() {
         System.out.println("check");
@@ -102,11 +113,13 @@ public class index {
 
 //............................end of methods call by employer manu.................................
 
-//............................this methods call from employer menu.................................
-    public static void placeTheOder() {
-        System.out.println("check");
-        
+//............................methods for solve maths part(functions)..............................
+    public static float delivery_cost(int D, int R, int W) {
+        float cost = D * R * (1 + W / 10000.0f);
+        return cost;
     }
 
-//............................end of methods call by employer manu.................................
+
+
+//............................end of the methods for solve maths part..............................
 }

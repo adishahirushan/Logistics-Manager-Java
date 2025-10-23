@@ -167,7 +167,7 @@ public class index {
 
 //............................end of the methods for solve maths part..............................
 
-    public static void read_route_data_to_array(String[][] arr_route) {
+    public static void read_route_data_to_array(String[][] arr_route) { // load routs text to array
         try (BufferedReader br = new BufferedReader(new FileReader("routes.txt"))) {
             String line;
             int row = 0;
@@ -188,7 +188,7 @@ public class index {
         
     }
 
-    public static void display_distance(String[][] arr_route) {
+    public static void display_distance(String[][] arr_route) {   // display route table
         System.out.println();
         System.out.println("_______________________________________________________________________________________________________________________________________");
         

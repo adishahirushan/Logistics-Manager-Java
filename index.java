@@ -221,8 +221,6 @@ public class index {
         } catch (IOException e) {
             System.out.println("Error reading routes.txt: " + e.getMessage());
         }
-
-        // Optional: Print the array to verify
         
     }
 //..........................end of the array loading ...............................................
@@ -243,6 +241,7 @@ public class index {
             if (arr_route[i][0] == null || arr_route[i][0].equalsIgnoreCase("null")) {
                 continue; // skip row if first cell is "null"
             }
+            
             System.out.print("|");
             System.out.printf("%3d) ", i); // row label
 
@@ -349,7 +348,7 @@ public class index {
             }
              
         }    
-       
+       write_route_data_to_file(arr_route);
         
     }
 
@@ -379,13 +378,53 @@ public class index {
         arr_route[city_id][0] = city_name;
         }
 
-        
+        write_route_data_to_file(arr_route);
     }
 
     public static void remove_city(String[][] arr_route) {
+
+        
+
+        Scanner sc =new Scanner(System.in);
+        display_distance(arr_route);
+        display_distance(arr_route); 
+        System.out.print("what city you want to remove/delete, ");
+        System.out.println("enter city Id (get city id from above table 1st column) :");
+        int city_id = sc.nextInt();
+
+        for (int i = 0; i < 31; i++) {
+            arr_route[i][city_id] = null;
+            arr_route[city_id][i] = null;
+ 
+        }
+        write_route_data_to_file(arr_route);
         
     }
 
+   public static void write_route_data_to_file(String[][] arr_route) {
+    String filePath = "routes.txt";
+
+    // Step 1: Write array to file
+    try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+        for (int row = 0; row < arr_route.length; row++) {
+            StringBuilder line = new StringBuilder();
+            for (int col = 0; col < arr_route[row].length; col++) {
+                String value = arr_route[row][col];
+                line.append(value == null ? "null" : value);
+                if (col < arr_route[row].length - 1) {
+                    line.append(",");
+                }
+            }
+            bw.write(line.toString());
+            bw.newLine();
+        }
+    } catch (IOException e) {
+        System.out.println("Error writing to routes.txt: " + e.getMessage());
+        return;
+    }
+    write_route_data_to_file(arr_route);
+
+}
 //..........................end of methods call from city management menu .....................................
 
 

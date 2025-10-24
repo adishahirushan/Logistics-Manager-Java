@@ -230,13 +230,13 @@ public class index {
 
     public static void display_distance(String[][] arr_route) {   // display route table
         System.out.println();
-        System.out.println("_______________________________________________________________________________________________________________________________________");
+        System.out.println("________________________________________________________________________________________________________________________________________________");
         
         // Print rows with row labels and aligned cells
         for (int i = 0; i < 31; i++) {
             
             if (i == 1){
-                System.out.println("|_____|______________|_________________________________________________________________________________________________________________|");
+                System.out.println("|_____|______________|_____________________________________________________________________________________________________________________________");
             }
             
             if (arr_route[i][0] == null || arr_route[i][0].equalsIgnoreCase("null")) {
@@ -282,15 +282,58 @@ public class index {
                 }}
                 }
             }
-            System.out.print("|"); 
+            if(i != 0) {
+            System.out.print("|"); }
             System.out.println();
+            
         }
-        System.out.println("|_____|______________|_________________________________________________________________________________________________________________|");
+        System.out.println("|_____|______________|__________________________________________________________________________________________________________________________");
         
     }
 
 
     public static void add_new_city(String[][] arr_route) {
+        
+        Scanner sc = new Scanner(System.in);
+        String cityname ;
+        String distenceval;
+        String cell;
+        System.out.println(arr_route[28][28]);
+        for (int i = 0; i < 32; i++) {
+
+            if(i == 31){
+                System.out.println("Database has reached its maximum storage limit.delete unwanted things and try again.");
+                i = 31;
+            }
+            else{
+                cell = arr_route[i][i];
+            if (cell == null || cell.equalsIgnoreCase("null")) {
+
+           // if (arr_route[i][i].equalsIgnoreCase("-1") ){
+                System.out.println("enter city name :");
+                System.out.print(arr_route[i][i]);
+                cityname = sc.next();
+                arr_route[0][i] = cityname;
+                arr_route[i][0] = cityname;
+                arr_route[i][i] = "0";
+
+                for (int j = 1; j <= i ; j++) {
+
+                    System.out.print("enter distence between " + cityname + " and " + arr_route[0][j] + " : ");
+                    distenceval = sc.next();
+
+                    arr_route[j][i] = distenceval;
+                    arr_route[i][j] = distenceval;
+
+                }
+                i = 33;
+            }}
+               
+                        
+           
+        }    
+
+        display_distance(arr_route);
         
     }
 

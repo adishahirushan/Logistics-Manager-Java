@@ -1,4 +1,4 @@
-cities,Colombo,Negombo,Kalutara,Galle,Matara,Hambantota,Tangalle,Kandy,NuwaraEliya,Kegalle,Ratnapura,Kurunegala,Puttalam,Chilaw,Anuradhapura,Polonnaruwa,Dambulla,Trincomalee,Batticaloa,Pottuvil,Ampara,Jaffna,Kilinochchi,Mannar,Vavuniya,Mullaitivu,Badulla,Monaragala,Embilipitiya,Point Pedro,
+cities,Colombo,Negombo,Kalutara,Galle,Matara,Hambantota,Tangalle,Kandy,NuwaraEliya,Kegalle,Ratnapura,Kurunegala,Puttalam,Chilaw,Anuradhapura,Polonnaruwa,Dambulla,Trincomalee,Batticaloa,Pottuvil,Ampara,Jaffna,null,null,null,null,null,null,null,null
 Colombo,0,42,54,142,178,222,167,127,138,81,89,112,167,98,223,228,185,320,297,298,275,411,null,null,null,null,null,null,null,null
 Negombo,42,0,96,183,216,251,196,120,147,77,116,89,124,56,186,205,157,291,287,307,274,369,null,null,null,null,null,null,null,null
 Kalutara,54,96,0,88,128,184,130,145,134,105,67,148,219,151,267,255,219,353,308,284,276,462,null,null,null,null,null,null,null,null,

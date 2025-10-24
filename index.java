@@ -37,7 +37,7 @@ public class index {
             if (choice_no_1 == 1) {
                 customer();
             }else if (choice_no_1 == 2) {
-                employer();
+                employer(arr_route);
             }else if (choice_no_1 == 3) {
                 repeater_1 = false;
             }else{
@@ -72,7 +72,7 @@ public class index {
         
     }
 
-    public static void employer() {
+    public static void employer(String[][] arr_route) {
 
         Scanner sc = new Scanner(System.in);
         boolean repeater_2 = true;
@@ -89,7 +89,7 @@ public class index {
             int choice_no_2 = sc.nextInt();
 
             if (choice_no_2 == 1) {
-                city_management();
+                city_management(arr_route);
             }else if (choice_no_2 == 2) {
                 delivery_records();
             }else if (choice_no_2 == 3) {
@@ -113,9 +113,45 @@ public class index {
 //............................end of methods call by costomer manu.................................
 
 //............................this methods call from employer menu.................................
-    public static void city_management() {
-        System.out.println("check");
-        
+    public static void city_management(String[][] arr_route) {
+        boolean repeater_3 = true ; 
+
+        Scanner sc =new Scanner(System.in);
+        int choice_no_4;
+        while(repeater_3){
+            System.out.println("");
+            System.out.println(".....city management menu.....");
+            System.out.println("1. View city table");
+            System.out.println("2. Add new city");
+            System.out.println("3. Rename city");
+            System.out.println("4. Remove city");
+            System.out.print("5. exit from city management : ");
+
+            choice_no_4 = sc.nextInt();
+
+            if(choice_no_4 == 1){
+                display_distance(arr_route);
+            }
+            else if(choice_no_4 == 2){
+                add_new_city(arr_route);
+            }
+            else if(choice_no_4 == 3){
+                rename_city(arr_route);
+            }
+            else if(choice_no_4 == 4){
+                remove_city(arr_route);
+            }
+            else if(choice_no_4 == 5){
+                repeater_3 = false;
+            }
+            else{
+                System.out.println("invalid choice please double check and try anain");
+            }
+
+            
+            
+
+        }
     }
     public static void delivery_records() {
         System.out.println("check");
@@ -167,6 +203,7 @@ public class index {
 
 //............................end of the methods for solve maths part..............................
 
+//............................Load array to programe fron this method..............................
     public static void read_route_data_to_array(String[][] arr_route) { // load routs text to array
         try (BufferedReader br = new BufferedReader(new FileReader("routes.txt"))) {
             String line;
@@ -187,6 +224,9 @@ public class index {
         // Optional: Print the array to verify
         
     }
+//..........................end of the array loading ...............................................
+
+//..........................this methods call from city management menu.............................
 
     public static void display_distance(String[][] arr_route) {   // display route table
         System.out.println();
@@ -249,6 +289,20 @@ public class index {
         
     }
 
+
+    public static void add_new_city(String[][] arr_route) {
+        
+    }
+
+    public static void rename_city(String[][] arr_route) {
+        
+    }
+
+    public static void remove_city(String[][] arr_route) {
+        
+    }
+
+//..........................end of methods call from city management menu .....................................
 
 
 

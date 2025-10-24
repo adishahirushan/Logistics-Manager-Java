@@ -12,6 +12,7 @@ import java.io.BufferedWriter;      // For efficient writing
 import java.io.FileInputStream;     // For reading binary files
 import java.io.FileOutputStream;    // For writing binary files
 import java.io.IOException;         // For handling IO exceptions
+import java.util.concurrent.ForkJoinPool;
 
 public class index {
     
@@ -298,7 +299,8 @@ public class index {
         String cityname ;
         String distenceval;
         String cell;
-        System.out.println(arr_route[28][28]);
+        boolean same_city_catcher = true;
+        
         for (int i = 0; i < 32; i++) {
 
             if(i == 31){
@@ -313,6 +315,18 @@ public class index {
                 System.out.println("enter city name :");
                 System.out.print(arr_route[i][i]);
                 cityname = sc.next();
+
+               for (int k = 0; k < 31; k++) {
+                    if (arr_route[k][0] != null && arr_route[k][0].equalsIgnoreCase(cityname)){
+                    same_city_catcher = false;
+                    System.out.println(cityname + " is already stored.");
+
+                    break;
+                    }
+                    
+                } 
+
+                if(same_city_catcher){
                 arr_route[0][i] = cityname;
                 arr_route[i][0] = cityname;
                 arr_route[i][i] = "0";
@@ -327,17 +341,44 @@ public class index {
 
                 }
                 i = 33;
+            }
+            if(same_city_catcher == false){
+                i = 33;
             }}
-               
-                        
-           
+        
+            }
+             
         }    
-
-        display_distance(arr_route);
+       
         
     }
 
     public static void rename_city(String[][] arr_route) {
+        
+        Scanner sc =new Scanner(System.in);
+        boolean same_city_catcher = true;
+        display_distance(arr_route); 
+        System.out.print("what city you want to rename, ");
+        System.out.println("enter city Id (get city id from above table 1st column) :");
+        int city_id = sc.nextInt();
+        sc.nextLine();
+        System.out.print("enter new name :");
+        String city_name = sc.nextLine();
+        
+        for (int k = 0; k < 31; k++) {
+            if (arr_route[k][0] != null && arr_route[k][0].equalsIgnoreCase(city_name)){
+            same_city_catcher = false;
+            System.out.println(city_name + " is already stored.plz retry using another name");
+
+            break;
+            }
+        } 
+
+        if(same_city_catcher){
+        arr_route[0][city_id] = city_name;
+        arr_route[city_id][0] = city_name;
+        }
+
         
     }
 

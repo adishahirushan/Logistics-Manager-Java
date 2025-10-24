@@ -50,7 +50,6 @@ public class index {
     }
 //............................main menu end from here..............................................
 
-
 //............................this methods call from main menu.....................................
 
     public static void customer() {
@@ -149,7 +148,7 @@ public class index {
                 System.out.println("invalid choice please double check and try anain");
             }
 
-            
+            write_route_data_to_file(arr_route);
             
 
         }
@@ -330,15 +329,16 @@ public class index {
                 arr_route[i][0] = cityname;
                 arr_route[i][i] = "0";
 
-                for (int j = 1; j <= i ; j++) {
+                for (int j = 1; j <= 30 ; j++) {
 
+                    if(arr_route[0][j] != null && !arr_route[0][j].equalsIgnoreCase("null")){
                     System.out.print("enter distence between " + cityname + " and " + arr_route[0][j] + " : ");
                     distenceval = sc.next();
 
                     arr_route[j][i] = distenceval;
                     arr_route[i][j] = distenceval;
 
-                }
+                }}
                 i = 33;
             }
             if(same_city_catcher == false){
@@ -348,7 +348,7 @@ public class index {
             }
              
         }    
-       write_route_data_to_file(arr_route);
+       
         
     }
 
@@ -378,7 +378,7 @@ public class index {
         arr_route[city_id][0] = city_name;
         }
 
-        write_route_data_to_file(arr_route);
+        
     }
 
     public static void remove_city(String[][] arr_route) {
@@ -422,7 +422,7 @@ public class index {
         System.out.println("Error writing to routes.txt: " + e.getMessage());
         return;
     }
-    write_route_data_to_file(arr_route);
+    
 
 }
 //..........................end of methods call from city management menu .....................................

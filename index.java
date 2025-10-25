@@ -1,18 +1,12 @@
 import java.util.Scanner;
 
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-
 import java.io.File;                // For file creation, deletion, and metadata
 import java.io.FileReader;          // For reading character files
 import java.io.FileWriter;          // For writing character files
 import java.io.BufferedReader;      // For efficient reading
 import java.io.BufferedWriter;      // For efficient writing
-import java.io.FileInputStream;     // For reading binary files
-import java.io.FileOutputStream;    // For writing binary files
 import java.io.IOException;         // For handling IO exceptions
-import java.util.concurrent.ForkJoinPool;
+
 
 public class index {
     
@@ -23,6 +17,7 @@ public class index {
         boolean repeater_1 = true;
         String[][] arr_route = new String[31][31];
         read_route_data_to_array(arr_route);
+        //placeTheOder(arr_route);
 
         while (repeater_1) {  
             System.out.println(" ");  
@@ -36,7 +31,7 @@ public class index {
             int choice_no_1 = sc.nextInt(); 
 
             if (choice_no_1 == 1) {
-                customer();
+                customer(arr_route);
             }else if (choice_no_1 == 2) {
                 employer(arr_route);
             }else if (choice_no_1 == 3) {
@@ -52,7 +47,7 @@ public class index {
 
 //............................this methods call from main menu.....................................
 
-    public static void customer() {
+    public static void customer(String[][] arr_route) {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to costomer aria");
@@ -63,7 +58,7 @@ public class index {
         char choice_no_3_1 = choice_no_3.charAt(0);
         
         if (choice_no_3_1 == 'Y' ){ //we don't use .equal becouse this is char data type variable it work with == with ''
-            placeTheOder();
+            placeTheOder(arr_route);
         }
         else{
             System.out.println("Sorry costormers only can delever order from us. If you want to delever oder from us plz try again. Thank you.");
@@ -105,9 +100,57 @@ public class index {
 //............................end of methods call by main manu.....................................
 
 //............................this methods call from costomer menu.................................
-    public static void placeTheOder() {
-        System.out.println("check");
+    public static void placeTheOder(String[][] arr_route) {
+        Scanner sc = new Scanner(System.in);
+        display_distance_customer(arr_route); 
+        System.out.print("Enater source city iD (city id is 1st colluom ) : ");
+        int source_city_id = sc.nextInt();
+        System.out.print("Enter destination city iD (city id is 1st colluom ) : ");
+        int destination_city_id = sc.nextInt();
+        System.out.print("Enter package Weight : ");
+        float weight = sc.nextFloat();
         
+        
+
+        // Vehicle data: {Capacity, Rate/km, Avg Speed, Fuel Efficiency}
+        String[] types = {"Van", "Truck", "Lorry"};
+        int[][] data = {
+            {1000, 30, 60, 12},
+            {5000, 40, 50, 6},
+            {10000, 80, 45, 4}
+        };
+
+        // Print header
+        System.out.printf("%-6s %-12s %-15s %-18s %-20s%n",
+                "Type", "Capacity(kg)", "Rate/km (LKR)", "Avg Speed (km/h)", "Fuel Efficiency (km/l)");
+        System.out.println("--------------------------------------------------------------------------");
+
+        // Filter and print rows where weight <= capacity
+        int raw_counter = 0;
+        for (int i = 0; i < data.length; i++) {
+            if (weight <= data[i][0]) {
+                raw_counter ++ ;
+                System.out.printf("%-6s %-12d %-15d %-18d %-20d%n",
+                        types[i], data[i][0], data[i][1], data[i][2], data[i][3]);
+            }
+        }
+        if (raw_counter == 0) {
+            System.out.println("The specified weight exceeds the maximum load capacity of all available vehicles, the highest being 10000 kg");
+        }
+        else if (source_city_id == destination_city_id) {
+            System.out.println("Delivery cannot be processed as the source and destination cities are the same. Our service is designed exclusively for city-to-city deliveries.");
+        }
+        else{
+
+        System.out.print("Enter package vehical type  : ");
+        String v_type = sc.next();
+        System.out.println();
+
+
+
+
+        }
+       
     }
 
 //............................end of methods call by costomer manu.................................
@@ -153,12 +196,13 @@ public class index {
 
         }
     }
+    
     public static void delivery_records() {
         System.out.println("check");
         
     }
     public static void performance_reports() {
-        System.out.println("check");
+        System.out.println();
         
     }
     
@@ -199,7 +243,6 @@ public class index {
         float customercharge = total_cost + profit;
         return customercharge;
     }
-
 
 //............................end of the methods for solve maths part..............................
 
@@ -258,7 +301,7 @@ public class index {
                 }}
                 else{
                 if (cell == null || cell.equalsIgnoreCase("null")) {
-                    System.out.printf("%-5s", ""); // empty cell
+                    //System.out.printf("%-5s", ""); // empty cell
                 } else {
                     
                     if(arr_route[i + 1][j] == null  ){}
@@ -290,6 +333,64 @@ public class index {
         
     }
 
+     public static void display_distance_customer(String[][] arr_route) {   // display route table
+        System.out.println();
+        System.out.println("______________________");
+                            
+        // Print rows with row labels and aligned cells
+        for (int i = 0; i < 31; i++) {
+            
+            if (i == 1){
+                System.out.println("|_____|______________|");
+            }
+            
+            if (arr_route[i][0] == null || arr_route[i][0].equalsIgnoreCase("null")) {
+                continue; // skip row if first cell is "null"
+            }
+            
+            System.out.print("|");
+            System.out.printf("%3d) ", i); // row label
+
+            for (int j = 0; j < 31; j++) {
+                
+                String cell = arr_route[i][j];
+                if(i == 0){
+                if(j == 0){
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf("%-14s", ""); // empty cell
+                } else {
+                    System.out.print("|");
+                    System.out.printf("%-14s", cell); // aligned cell
+                    System.out.printf("%-4s", "|"); 
+                }}
+                else{
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf("%-5s", ""); // empty cell
+                } else {
+                    
+                    //if(arr_route[i + 1][j] == null  ){}
+                    //else{System.out.printf("%-5s", j);} // aligned cell
+                }}
+                }else{
+                    if(j == 0){
+                System.out.print("|");
+                if (cell == null || cell.equalsIgnoreCase("null")) {
+                    System.out.printf("%-14s", ""); // empty cell
+                } else {
+                    System.out.printf("%-14s", cell); // aligned cell
+                    System.out.printf("%-4s", "|"); 
+                }}
+                else{
+                }
+                }
+            }
+            
+            System.out.println();
+            
+        }
+        System.out.println("|_____|______________|");
+        
+    }
 
     public static void add_new_city(String[][] arr_route) {
         
@@ -311,7 +412,7 @@ public class index {
 
            // if (arr_route[i][i].equalsIgnoreCase("-1") ){
                 System.out.println("enter city name :");
-                System.out.print(arr_route[i][i]);
+                
                 cityname = sc.next();
 
                for (int k = 0; k < 31; k++) {
@@ -397,7 +498,7 @@ public class index {
             arr_route[city_id][i] = null;
  
         }
-        write_route_data_to_file(arr_route);
+        
         
     }
 

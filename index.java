@@ -143,13 +143,77 @@ public class index {
         else{
 
         System.out.print("Enter package vehical type  : ");
-        String v_type = sc.next();
+        char v_type = (sc.next()).charAt(0);
+        v_type = Character.toUpperCase(v_type);
         System.out.println();
+        float W = weight;
+            int R = 0;
+            int S = 0;
+            int E = 0;
+            String v_type_name = null;
+        if(v_type == 'V'){
+            v_type_name = "Van";
+            R = data[0][1];
+            S = data[0][2];
+            E = data[0][3];
+
+        }else if( v_type == 'T' ){
+            v_type_name = "Truck";
+            R = data[1][1];
+            S = data[1][2];
+            E = data[1][3];
+
+        }else if( v_type == 'L'){
+            v_type_name = "Lorry";
+            R = data[2][1];
+            S = data[2][2];
+            E = data[2][3];
+
+        }
+        
+        if(v_type != 'V' && v_type != 'T' && v_type != 'L'){
+            System.out.println("incorect vehica type. plz try again with valid vehical tye from above table.");
+        }
+        else{
+            float D = least_destence_finder(arr_route,destination_city_id,source_city_id);
+            float F = D / E * 310.00f;
+
+            float cost = delivery_cost(D,R,W);
+            float time = estimated_time(D,S);
+            float fuel_Used = fuel_consumption(D,E);
+            float fuel_Used_cost = fuel_cost(fuel_Used ,F);
+            float total_cost = total_operational_cost(cost,fuel_Used_cost);
+            float profit = profit_calculation(cost);
+            float customercharge =final_charge_to_customer(total_cost,profit);
+  
+            System.out.println("==============================================================");
+            System.out.println("DELIVERY COST ESTIMATION");
+            System.out.println("--------------------------------------------------------------");
+            System.out.printf("%-20s: %s%n", "From", source_city_id);
+            System.out.printf("%-20s: %s%n", "To", destination_city_id);
+            System.out.printf("%-20s: %.0f km%n", "Minimum Distance", D);
+            System.out.printf("%-20s: %s%n", "Vehicle", v_type_name);
+            System.out.printf("%-20s: %.2f kg%n", "Weight", W);
+            System.out.println("--------------------------------------------------------------");
+            System.out.printf("%-19s ", "Base Cost");
+            System.out.println( ": " +  D + " X " + R + " ( 1 " + W + " / 10000) = " + String.format("%.2f", cost));
+            //System.out.printf("%-20s: %d × %.0f × (1 + %d/10000) = %,.2f LKR%n","Base Cost", D, R, W, cost);
+            System.out.printf("%-20s: %,.2f L%n", "Fuel Used", fuel_Used);
+            System.out.printf("%-20s: %,.2f LKR%n", "Fuel Cost", fuel_Used_cost);
+            System.out.printf("%-20s: %,.2f LKR%n", "Operational Cost", total_cost);
+            System.out.printf("%-20s: %,.2f LKR%n", "Profit", profit);
+            System.out.printf("%-20s: %,.2f LKR%n", "Customer Charge", customercharge);
+            System.out.printf("%-20s: %.2f hours%n", "Estimated Time", time);
+            System.out.println("==============================================================");
+    
 
 
+
+            
 
 
         }
+    }
        
     }
 
@@ -209,17 +273,17 @@ public class index {
 //............................end of methods call by employer manu.................................
 
 //............................methods for solve maths part(functions)..............................
-    public static float delivery_cost(int D, int R, int W) {
+    public static float delivery_cost(float D, int R, float W) {
         float cost = D * R * (1 + W / 10000.0f);
         return cost;
     }
 
-    public static float estimated_time(int D, int S) {
+    public static float estimated_time(float D, int S) {
         float time = D / S;
         return time;
     }
 
-    public static float fuel_consumption(int D, int E) {
+    public static float fuel_consumption(float D, int E) {
         float fuel_Used = D / E;
         return fuel_Used;
     }
@@ -499,6 +563,11 @@ public class index {
  
         }
         
+        
+    }
+
+    public static float least_destence_finder(String[][] arr_route ,int destination_city_id ,int source_city_id) {
+        return 100.21f;
         
     }
 

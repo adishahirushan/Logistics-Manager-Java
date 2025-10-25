@@ -164,7 +164,7 @@ public class index {
             E = data[1][3];
 
         }else if( v_type == 'L'){
-            v_type_name = "Lorry";
+            v_type_name = "L";
             R = data[2][1];
             S = data[2][2];
             E = data[2][3];
@@ -176,42 +176,42 @@ public class index {
         }
         else{
             float D = least_destence_finder(arr_route,destination_city_id,source_city_id);
-            float F = D / E * 310.00f;
+            if(D >= 0){
+                float F = D / E * 310.00f;
 
-            float cost = delivery_cost(D,R,W);
-            float time = estimated_time(D,S);
-            float fuel_Used = fuel_consumption(D,E);
-            float fuel_Used_cost = fuel_cost(fuel_Used ,F);
-            float total_cost = total_operational_cost(cost,fuel_Used_cost);
-            float profit = profit_calculation(cost);
-            float customercharge =final_charge_to_customer(total_cost,profit);
-  
-            System.out.println("==============================================================");
-            System.out.println("DELIVERY COST ESTIMATION");
-            System.out.println("--------------------------------------------------------------");
-            System.out.printf("%-20s: %s%n", "From", source_city_id);
-            System.out.printf("%-20s: %s%n", "To", destination_city_id);
-            System.out.printf("%-20s: %.0f km%n", "Minimum Distance", D);
-            System.out.printf("%-20s: %s%n", "Vehicle", v_type_name);
-            System.out.printf("%-20s: %.2f kg%n", "Weight", W);
-            System.out.println("--------------------------------------------------------------");
-            System.out.printf("%-19s ", "Base Cost");
-            System.out.println( ": " +  D + " X " + R + " ( 1 " + W + " / 10000) = " + String.format("%.2f", cost));
-            //System.out.printf("%-20s: %d × %.0f × (1 + %d/10000) = %,.2f LKR%n","Base Cost", D, R, W, cost);
-            System.out.printf("%-20s: %,.2f L%n", "Fuel Used", fuel_Used);
-            System.out.printf("%-20s: %,.2f LKR%n", "Fuel Cost", fuel_Used_cost);
-            System.out.printf("%-20s: %,.2f LKR%n", "Operational Cost", total_cost);
-            System.out.printf("%-20s: %,.2f LKR%n", "Profit", profit);
-            System.out.printf("%-20s: %,.2f LKR%n", "Customer Charge", customercharge);
-            System.out.printf("%-20s: %.2f hours%n", "Estimated Time", time);
-            System.out.println("==============================================================");
+                float cost = delivery_cost(D,R,W);
+                float time = estimated_time(D,S);
+                float fuel_Used = fuel_consumption(D,E);
+                float fuel_Used_cost = fuel_cost(fuel_Used ,F);
+                float total_cost = total_operational_cost(cost,fuel_Used_cost);
+                float profit = profit_calculation(cost);
+                float customercharge =final_charge_to_customer(total_cost,profit);
+                System.out.println("==============================================================");
+                System.out.println("DELIVERY COST ESTIMATION");
+                System.out.println("--------------------------------------------------------------");
+                System.out.printf("%-20s: %s%n", "From", source_city_id);
+                System.out.printf("%-20s: %s%n", "To", destination_city_id);
+                System.out.printf("%-20s: %.0f km%n", "Minimum Distance", D);
+                System.out.printf("%-20s: %s%n", "Vehicle", v_type_name);
+                System.out.printf("%-20s: %.2f kg%n", "Weight", W);
+                System.out.println("--------------------------------------------------------------");
+                System.out.printf("%-19s ", "Base Cost");
+                System.out.println( ": " +  D + " X " + R + " ( 1 " + W + " / 10000) = " + String.format("%.2f", cost));
+                //System.out.printf("%-20s: %d × %.0f × (1 + %d/10000) = %,.2f LKR%n","Base Cost", D, R, W, cost);
+                System.out.printf("%-20s: %,.2f L%n", "Fuel Used", fuel_Used);
+                System.out.printf("%-20s: %,.2f LKR%n", "Fuel Cost", fuel_Used_cost);
+                System.out.printf("%-20s: %,.2f LKR%n", "Operational Cost", total_cost);
+                System.out.printf("%-20s: %,.2f LKR%n", "Profit", profit);
+                System.out.printf("%-20s: %,.2f LKR%n", "Customer Charge", customercharge);
+                System.out.printf("%-20s: %.2f hours%n", "Estimated Time", time);
+                System.out.println("==============================================================");
     
 
 
 
             
 
-
+            }
         }
     }
        
@@ -567,8 +567,100 @@ public class index {
     }
 
     public static float least_destence_finder(String[][] arr_route ,int destination_city_id ,int source_city_id) {
-        return 100.21f;
+        int r = -1;
+        int z = 0;
+        for (int i = 0; i < 31; i++) {
+            if(null == arr_route[i][0]) {}
+            else{r++;}
+        }
         
+        if(destination_city_id <= r && source_city_id <= r && source_city_id > 0 && destination_city_id > 0){
+            
+            // Level 1 distence checker
+
+            float distance_from_table = Float.parseFloat(arr_route[source_city_id][destination_city_id]);
+            System.out.println(distance_from_table);
+
+            // level 2 distence checker
+            for (int m = 1; m < r+1 ; m++) {
+
+                float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m]) + Float.parseFloat(arr_route[m][destination_city_id]) ;
+
+                System.out.println(distance_from_table + " and " + distance_by_loop);
+                z++;
+
+                if(distance_by_loop < distance_from_table){
+                    distance_from_table =distance_by_loop ; 
+                }                                
+            }
+
+            //level 3 distence checker
+            for (int m = 1; m < r+1 ; m++) {
+
+                for (int j = 1; j < r; j++) {
+               
+                    float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][destination_city_id]) ;
+
+                    System.out.println(distance_from_table + " and " + distance_by_loop);
+                    z++;
+
+                    if(distance_by_loop < distance_from_table){
+                        distance_from_table =distance_by_loop ; 
+                    }   
+                }                                
+            }
+
+            //level 4 distence checker
+            for (int m = 1; m < r+1 ; m++) {
+
+                for (int j = 1; j < r; j++) {
+
+                    for (int k = 1; k < r-1; k++) {
+               
+                        float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][k]) + Float.parseFloat(arr_route[k][destination_city_id]) ;
+
+                        System.out.println(distance_from_table + " and " + distance_by_loop);
+                        z++;
+                        if(distance_by_loop < distance_from_table){
+                            distance_from_table =distance_by_loop ; 
+                        }   
+                    }   
+                }                             
+            }
+
+
+        System.out.println(distance_from_table);
+        System.out.println("value count = " + z );
+        int total = 100; // total bar length
+        for (int i = 0; i <= total; i++) {
+            int percent = (i * 100) / total;
+            StringBuilder bar = new StringBuilder();
+            bar.append("\r["); // carriage return to overwrite line
+            for (int j = 0; j < total; j++) {
+                if (j < i) bar.append("=");
+                else if (j == i) bar.append(">");
+                else bar.append(" ");
+            }
+            bar.append("] ").append(percent).append("%");
+            System.out.print(bar);
+            try {
+            Thread.sleep(100); // sleep for 100 milliseconds
+            } catch (InterruptedException e) {
+            e.printStackTrace();
+             }
+
+        }
+        System.out.println();
+
+
+
+
+            
+        return 100.21f;
+        }else{
+            System.out.println("Please enter a valid City ID. You can find the correct ID in the first column of the city table displayed during the request process.");
+            return -20; 
+        }
     }
 
    public static void write_route_data_to_file(String[][] arr_route) {

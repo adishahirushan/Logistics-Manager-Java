@@ -1,6 +1,5 @@
 import java.util.Scanner;
 
-import java.io.File;                // For file creation, deletion, and metadata
 import java.io.FileReader;          // For reading character files
 import java.io.FileWriter;          // For writing character files
 import java.io.BufferedReader;      // For efficient reading
@@ -89,7 +88,7 @@ public class index {
             if (choice_no_2 == 1) {
                 city_management(arr_route);
             }else if (choice_no_2 == 2) {
-                delivery_records();
+                delivery_records(deliveries, ROWS, COLS);
             }else if (choice_no_2 == 3) {
                 performance_reports(deliveries, ROWS, COLS);
             }else if (choice_no_2 == 4) {
@@ -396,8 +395,72 @@ public class index {
     }
     
     
-    public static void delivery_records() {
-        System.out.println("check");
+    public static void delivery_records(String[][] deliveries,int ROWS,int COLS) {
+
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        String value="n";
+        String formatted;
+            System.out.println("_____________________________________________________________________________________________________________________________________________________________________");
+
+            System.out.printf("%-3s | ", deliveries[0][0]);
+            System.out.printf("%-15s | ", deliveries[0][1]);
+            System.out.printf("%-15s | ", deliveries[0][2]);
+            System.out.printf("%-9s | ", deliveries[0][3]);
+            System.out.printf("%-7s | ", deliveries[0][4]);
+            System.out.printf("%-8s | ", deliveries[0][5]);
+            System.out.printf("%-10s | ", deliveries[0][6]);
+            System.out.printf("%-9s | ", deliveries[0][7]);
+            System.out.printf("%-10s | ", deliveries[0][8]);
+            System.out.printf("%-12s | ", deliveries[0][9]);
+            System.out.printf("%-9s | ", deliveries[0][10]);
+            System.out.printf("%-12s | ", deliveries[0][11]);
+            System.out.printf("%-8s | ", deliveries[0][12]);    
+            System.out.println();
+            System.out.println("____|_________________|_________________|___________|_________|__________|____________|___________|____________|______________|___________|______________|__________|");
+
+            for (int i = 1;i < ROWS; i++) {
+                                 
+                    value = deliveries[i][0];
+                    if (value != null && !"null".equals(value)) {
+                        
+                        
+
+                        System.out.printf("%-3s | ", deliveries[i][0]);
+                        System.out.printf("%-15s | ", deliveries[i][1]);
+                        System.out.printf("%-15s | ", deliveries[i][2]);
+                        formatted = String.format("%.1f", Double.parseDouble(deliveries[i][3]));
+                        System.out.printf("%-9s | ", formatted);
+                        System.out.printf("%-7s | ", deliveries[i][4]);
+                        formatted = String.format("%.1f", Double.parseDouble(deliveries[i][5]));
+                        System.out.printf("%-8s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][6]));
+                        System.out.printf("%-10s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][7]));
+                        System.out.printf("%-9s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][8]));
+                        System.out.printf("%-10s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][9]));
+                        System.out.printf("%-12s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][10]));
+                        System.out.printf("%-9s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][11]));
+                        System.out.printf("%-12s | ", formatted);
+                        formatted = String.format("%.2f", Double.parseDouble(deliveries[i][12]));
+                        System.out.printf("%-8s | ", formatted);
+                        
+                    }
+                    
+                
+                
+                if (!"null".equals(value)){
+                System.out.println();
+                }
+                
+            }
+            System.out.println("____|_________________|_________________|___________|_________|__________|____________|___________|____________|______________|___________|______________|__________|");
+
+
+
         
     }
    

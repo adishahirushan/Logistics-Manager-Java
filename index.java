@@ -16,6 +16,9 @@ public class index {
         Scanner sc = new Scanner(System.in);
         boolean repeater_1 = true;
         String[][] arr_route = new String[31][31];
+        final int ROWS = 51;
+        final int COLS = 13; // Updated to 13 columns
+        String[][] deliveries = new String[ROWS][COLS];
         read_route_data_to_array(arr_route);
         //placeTheOder(arr_route);
 
@@ -31,7 +34,7 @@ public class index {
             int choice_no_1 = sc.nextInt(); 
 
             if (choice_no_1 == 1) {
-                customer(arr_route);
+                customer(arr_route,deliveries ,ROWS,COLS);
             }else if (choice_no_1 == 2) {
                 employer(arr_route);
             }else if (choice_no_1 == 3) {
@@ -47,7 +50,7 @@ public class index {
 
 //............................this methods call from main menu.....................................
 
-    public static void customer(String[][] arr_route) {
+    public static void customer(String[][] arr_route,String[][] deliveries ,int ROWS,int COLS) {
 
         Scanner sc = new Scanner(System.in);
         System.out.println("Welcome to costomer aria");
@@ -58,7 +61,7 @@ public class index {
         char choice_no_3_1 = choice_no_3.charAt(0);
         
         if (choice_no_3_1 == 'Y' ){ //we don't use .equal becouse this is char data type variable it work with == with ''
-            placeTheOder(arr_route);
+            placeTheOder(arr_route,deliveries ,ROWS,COLS);
         }
         else{
             System.out.println("Sorry costormers only can delever order from us. If you want to delever oder from us plz try again. Thank you.");
@@ -100,7 +103,7 @@ public class index {
 //............................end of methods call by main manu.....................................
 
 //............................this methods call from costomer menu.................................
-    public static void placeTheOder(String[][] arr_route) {
+    public static void placeTheOder(String[][] arr_route,String[][] deliveries ,int ROWS,int COLS) {
         Scanner sc = new Scanner(System.in);
         display_distance_customer(arr_route); 
         System.out.print("Enater source city iD (city id is 1st colluom ) : ");
@@ -109,6 +112,9 @@ public class index {
         int destination_city_id = sc.nextInt();
         System.out.print("Enter package Weight : ");
         float weight = sc.nextFloat();
+        
+        String source_city_name = arr_route[source_city_id][0] ;
+        String destination_city_name = arr_route[destination_city_id][0] ;
         
         
 
@@ -189,8 +195,8 @@ public class index {
                 System.out.println("==============================================================");
                 System.out.println("DELIVERY COST ESTIMATION");
                 System.out.println("--------------------------------------------------------------");
-                System.out.printf("%-20s: %s%n", "From", source_city_id);
-                System.out.printf("%-20s: %s%n", "To", destination_city_id);
+                System.out.printf("%-20s: %s%n", "From", source_city_name);
+                System.out.printf("%-20s: %s%n", "To", destination_city_name);
                 System.out.printf("%-20s: %.0f km%n", "Minimum Distance", D);
                 System.out.printf("%-20s: %s%n", "Vehicle", v_type_name);
                 System.out.printf("%-20s: %.2f kg%n", "Weight", W);
@@ -205,12 +211,14 @@ public class index {
                 System.out.printf("%-20s: %,.2f LKR%n", "Customer Charge", customercharge);
                 System.out.printf("%-20s: %.2f hours%n", "Estimated Time", time);
                 System.out.println("==============================================================");
-    
 
 
+                load_deliver_history(deliveries,ROWS,COLS,source_city_name,destination_city_name,D,v_type_name,W,cost,fuel_Used,fuel_Used_cost,total_cost,profit,customercharge,time);
 
+//////////////////////////
+
+                System.out.println("Oder placed scuccessfully.");
             
-
             }
         }
     }
@@ -218,6 +226,126 @@ public class index {
     }
 
 //............................end of methods call by costomer manu.................................
+
+    public static void load_deliver_history(String[][] deliveries,int ROWS,int COLS,String source_city_name,String destination_city_name,float D,String v_type_name,Float W,float cost,float fuel_Used,float fuel_Used_cost,float total_cost,float profit,float customercharge,float time) {
+        
+        String filePath = "deliveries.txt"; // Adjust path if needed
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            int row = 0;
+
+            while ((line = br.readLine()) != null && row < ROWS) {
+                String[] columns = line.split(",", -1); // -1 keeps empty strings
+                for (int col = 0; col < COLS && col < columns.length; col++) {
+                    deliveries[row][col] = columns[col].trim(); // Remove extra spaces
+                }
+                row++;
+            }
+
+            // Print column titles (row 0)
+            //System.out.println("Column Titles:");
+
+            //for (String title : deliveries[0]) {
+            //    System.out.printf("%-9s | ", title);
+           // }
+
+            String value="n";
+            int record_count = 0;
+            int temp_int_holder;
+            int min_temp_holder = 50;
+            int null_count = 0;
+            // Print last delivery record (row 50)
+           // System.out.println("\n\nLast Delivery Record:");
+            for (int i = 1;i < ROWS; i++) {
+                for (int j = 0; j < COLS; j++) {
+                   
+                    value = deliveries[i][j];
+                    if (value != null && !"null".equals(value)) {
+                        temp_int_holder = Integer.parseInt(deliveries[i][0]);
+
+                        if(record_count < temp_int_holder){
+                            record_count =Integer.parseInt(deliveries[i][0]);
+                        }
+
+                        if(temp_int_holder < min_temp_holder){
+                            min_temp_holder =Integer.parseInt(deliveries[i][0]);
+                        }
+                       // System.out.printf("%-9s | ", value);
+                        
+                    }
+                    else{
+                        null_count++;
+                    }
+                }
+                
+                if (!"null".equals(value)){
+                //System.out.println();
+                }
+                
+            }
+
+            
+            null_count = null_count / 13;
+            if (null_count > 0) {
+                int line_write = 51 - null_count;
+
+                if (line_write >= 0 && line_write < deliveries.length) {
+                    deliveries[line_write][0]  = String.valueOf(record_count + 1);
+                    deliveries[line_write][1]  = String.valueOf(source_city_name);
+                    deliveries[line_write][2]  = String.valueOf(destination_city_name);
+                    deliveries[line_write][3]  = String.valueOf(D);
+                    deliveries[line_write][4]  = String.valueOf(v_type_name);
+                    deliveries[line_write][5]  = String.valueOf(W);
+                    deliveries[line_write][6]  = String.valueOf(cost);
+                    deliveries[line_write][7]  = String.valueOf(fuel_Used);
+                    deliveries[line_write][8]  = String.valueOf(fuel_Used_cost);
+                    deliveries[line_write][9]  = String.valueOf(total_cost);
+                    deliveries[line_write][10] = String.valueOf(profit);
+                    deliveries[line_write][11] = String.valueOf(customercharge);
+                    deliveries[line_write][12] = String.valueOf(time);
+                    
+                }
+            } else {
+                int line_write = min_temp_holder;
+  
+                    deliveries[line_write][0]  = String.valueOf(record_count + 1);
+                    deliveries[line_write][1]  = String.valueOf(source_city_name);
+                    deliveries[line_write][2]  = String.valueOf(destination_city_name);
+                    deliveries[line_write][3]  = String.valueOf(D);
+                    deliveries[line_write][4]  = String.valueOf(v_type_name);
+                    deliveries[line_write][5]  = String.valueOf(W);
+                    deliveries[line_write][6]  = String.valueOf(cost);
+                    deliveries[line_write][7]  = String.valueOf(fuel_Used);
+                    deliveries[line_write][8]  = String.valueOf(fuel_Used_cost);
+                    deliveries[line_write][9]  = String.valueOf(total_cost);
+                    deliveries[line_write][10] = String.valueOf(profit);
+                    deliveries[line_write][11] = String.valueOf(customercharge);
+                    deliveries[line_write][12] = String.valueOf(time);
+                  
+            }
+
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
+                for (int i = 0; i < ROWS; i++) {
+                    for (int j = 0; j < COLS; j++) {
+                        bw.write(deliveries[i][j] != null ? deliveries[i][j] : "null");
+                        if (j < COLS - 1) bw.write(","); // Add comma between columns
+                    }
+                    bw.newLine(); // Line break after each row
+                }
+                System.out.println("File saved successfully.");
+            } catch (IOException e) {
+                System.out.println("Error writing file: " + e.getMessage());
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error reading file: " + e.getMessage());
+        }
+
+              
+        
+
+    }
 
 //............................this methods call from employer menu.................................
     public static void city_management(String[][] arr_route) {
@@ -260,6 +388,7 @@ public class index {
 
         }
     }
+    
     
     public static void delivery_records() {
         System.out.println("check");
@@ -568,6 +697,11 @@ public class index {
 
     public static float least_destence_finder(String[][] arr_route ,int destination_city_id ,int source_city_id) {
 
+        if (arr_route[destination_city_id][0] == null || arr_route[source_city_id][0] == null || destination_city_id <= 0 || source_city_id <= 0 ) {
+            System.out.println("error : invalid value detected. plz try again carefully.");
+            return -20;
+        }else{
+
         int r = -1;
         int z = 0;        
         int guess_steps_count;
@@ -628,21 +762,36 @@ public class index {
             // level 2 distence checker
             for (int m = 1; m < r+1 ; m++) {
 
-                float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m]) + Float.parseFloat(arr_route[m][destination_city_id]) ;
-                                
-                z++;
-                if(z % loading_1_percent == 0 ){
-                    System.out.print("■");
-                }
-                if(z % 4 == 0){
-                    try {
-                        Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
-                    } catch (InterruptedException e) {
-                        System.out.println("Interrupted while waiting.");
+                if (arr_route[source_city_id][m] != null && arr_route[m][destination_city_id] != null){
+                    
+                    float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m]) + Float.parseFloat(arr_route[m][destination_city_id]) ;
+                                    
+                    z++;
+                    if(z % loading_1_percent == 0 ){
+                        System.out.print("■");
                     }
-                }   
-                if(distance_by_loop < distance_from_table){
-                    distance_from_table =distance_by_loop ; 
+                    if(z % 4 == 0){
+                        try {
+                            Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                        } catch (InterruptedException e) {
+                            System.out.println("Interrupted while waiting.");
+                        }
+                    }   
+                    if(distance_by_loop < distance_from_table){
+                        distance_from_table =distance_by_loop ; 
+                    }
+                }else{
+                    z++;
+                    if(z % loading_1_percent == 0 ){
+                        System.out.print("■");
+                    }
+                        if(z % 4 == 0){
+                            try {
+                                Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                            } catch (InterruptedException e) {
+                                System.out.println("Interrupted while waiting.");
+                            }
+                        } 
                 }                                
             }
 
@@ -650,25 +799,39 @@ public class index {
             for (int m = 1; m < r+1 ; m++) {
 
                 for (int j = 1; j < r; j++) {
-               
-                    float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][destination_city_id]) ;
+                    if (arr_route[source_city_id][m] != null && arr_route[m][j] != null && arr_route[j][destination_city_id] != null) {
 
-                    z++;
-                    if(z % loading_1_percent == 0 ){
-                        System.out.print("■");
-                    } 
-                    if(z % 4 == 0){
-                        try {
-                                Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
-                            } catch (InterruptedException e) {
-                                System.out.println("Interrupted while waiting.");
-                            }
-                    }
-                    
+                        float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][destination_city_id]) ;
 
-                    if(distance_by_loop < distance_from_table){
-                        distance_from_table =distance_by_loop ; 
-                    }   
+                        z++;
+                        if(z % loading_1_percent == 0 ){
+                            System.out.print("■");
+                        } 
+                        if(z % 4 == 0){
+                            try {
+                                    Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                                } catch (InterruptedException e) {
+                                    System.out.println("Interrupted while waiting.");
+                                }
+                        }
+                        
+
+                        if(distance_by_loop < distance_from_table){
+                            distance_from_table =distance_by_loop ; 
+                        }
+                    }else{
+                            z++;
+                                if(z % loading_1_percent == 0 ){
+                                    System.out.print("■");
+                                }
+                                if(z % 4 == 0){
+                                    try {
+                                        Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                                    } catch (InterruptedException e) {
+                                        System.out.println("Interrupted while waiting.");
+                                    }
+                                } 
+                        }   
                 }                                
             }
 
@@ -678,36 +841,55 @@ public class index {
                 for (int j = 1; j < r; j++) {
 
                     for (int k = 1; k < r-1; k++) {
-               
-                        float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][k]) + Float.parseFloat(arr_route[k][destination_city_id]) ;
 
-                        z++;
-                        if(z % loading_1_percent == 0 ){
-                            System.out.print("■");
-                        }
-                        if(z % 4 == 0){
-                            try {
-                                Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
-                            } catch (InterruptedException e) {
-                                System.out.println("Interrupted while waiting.");
+                        if (arr_route[source_city_id][m] != null && arr_route[m][j] != null && arr_route[j][k] != null && arr_route[k][destination_city_id] != null) {
+                                      
+                            float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][k]) + Float.parseFloat(arr_route[k][destination_city_id]) ;
+
+                            z++;
+                            if(z % loading_1_percent == 0 ){
+                                System.out.print("■");
                             }
-                        }
-                        if(distance_by_loop < distance_from_table){
-                            distance_from_table =distance_by_loop ; 
+                            if(z % 4 == 0){
+                                try {
+                                    Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                                } catch (InterruptedException e) {
+                                    System.out.println("Interrupted while waiting.");
+                                }
+                            }
+                        
+                            if(distance_by_loop < distance_from_table){
+                                distance_from_table =distance_by_loop ; 
+                            }
+                        }else{
+                            z++;
+                                if(z % loading_1_percent == 0 ){
+                                    System.out.print("■");
+                                }
+                                if(z % 4 == 0){
+                                    try {
+                                        Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                                    } catch (InterruptedException e) {
+                                        System.out.println("Interrupted while waiting.");
+                                    }
+                                } 
                         }   
                     }   
                 }                             
             }
 
 
-        System.out.println("]"); 
-        System.out.println();
+            System.out.println("]"); 
+            System.out.println();
 
-        return 100.21f;
-        }else{
-            System.out.println("Please enter a valid City ID. You can find the correct ID in the first column of the city table displayed during the request process.");
-            return -20; 
+            return 100.21f;
+            }else{
+                System.out.println("Please enter a valid City ID. You can find the correct ID in the first column of the city table displayed during the request process.");
+                return -20; 
+            }
         }
+         
+        
     }
     
 

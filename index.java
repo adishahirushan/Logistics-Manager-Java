@@ -36,7 +36,7 @@ public class index {
             if (choice_no_1 == 1) {
                 customer(arr_route,deliveries ,ROWS,COLS);
             }else if (choice_no_1 == 2) {
-                employer(arr_route);
+                employer(arr_route,deliveries, ROWS, COLS);
             }else if (choice_no_1 == 3) {
                 repeater_1 = false;
             }else{
@@ -70,7 +70,7 @@ public class index {
         
     }
 
-    public static void employer(String[][] arr_route) {
+    public static void employer(String[][] arr_route,String[][] deliveries ,int ROWS,int COLS) {
 
         Scanner sc = new Scanner(System.in);
         boolean repeater_2 = true;
@@ -91,7 +91,7 @@ public class index {
             }else if (choice_no_2 == 2) {
                 delivery_records();
             }else if (choice_no_2 == 3) {
-                performance_reports();
+                performance_reports(deliveries, ROWS, COLS);
             }else if (choice_no_2 == 4) {
                 repeater_2 = false;
             }else{
@@ -170,7 +170,7 @@ public class index {
             E = data[1][3];
 
         }else if( v_type == 'L'){
-            v_type_name = "L";
+            v_type_name = "Lorry";
             R = data[2][1];
             S = data[2][2];
             E = data[2][3];
@@ -244,6 +244,7 @@ public class index {
         System.out.println("Error reading file: " + e.getMessage());
     }
     }
+   
     public static void load_deliver_history(String[][] deliveries,int ROWS,int COLS,String source_city_name,String destination_city_name,float D,String v_type_name,Float W,float cost,float fuel_Used,float fuel_Used_cost,float total_cost,float profit,float customercharge,float time) {
         
         
@@ -399,33 +400,162 @@ public class index {
         System.out.println("check");
         
     }
-    public static void performance_reports() {
+   
+    public static void performance_reports(String[][] deliveries,int ROWS ,int COLS) {
 
-        int tol_del_comp = tol_del_comp();
+        System.out.println();
+        System.out.println();
 
-        System.out.println("========== PERFORMANCE REPORTS ==========");
-        System.out.println("a. Total Deliveries Completed     : " + "");
-        System.out.println("b. Total Distance Covered (km)    : " + "");
-        System.out.println("c. Average Delivery Time (hrs)    : " + "");
-        System.out.println("d. Total Revenue                  : " + "");
-        System.out.println("e. Total Profit                   : " + "");
-        System.out.println("f. Longest Route Completed (km)   : " + "");
-        System.out.println("g. Shortest Route Completed (km)  : " + "");
-        System.out.println("======================================");
+        int tol_del_comp = tol_del_comp(deliveries, ROWS, COLS);
+        float total_distance_covered = total_distance_covered(deliveries, ROWS, COLS);
+        float average_delivery_time = average_delivery_time(deliveries, ROWS, COLS);
+        float total_revenue = total_revenue(deliveries, ROWS, COLS);
+        float total_profit = total_profit(deliveries, ROWS, COLS);
+        float longest_route_completed = longest_route_completed(deliveries, ROWS, COLS);
+        float shortest_route_completed = shortest_route_completed(deliveries, ROWS, COLS);
+
+        System.out.println("============== PERFORMANCE REPORTS =================");
+        System.out.println("a. Total Deliveries Completed     : " + tol_del_comp);
+        System.out.println("b. Total Distance Covered (km)    : " + total_distance_covered);
+        System.out.println("c. Average Delivery Time (hrs)    : " + average_delivery_time);
+        System.out.println("d. Total Revenue                  : " + total_revenue);
+        System.out.println("e. Total Profit                   : " + total_profit);
+        System.out.println("f. Longest Route Completed (km)   : " + longest_route_completed);
+        System.out.println("g. Shortest Route Completed (km)  : " + shortest_route_completed);
+        System.out.println("====================================================");
         
        
     }
 //............................start of methods call by performance report .........................
-    public static int tol_del_comp() {
+    public static int tol_del_comp(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        int max = 0;
+        String value = null;
+        for (int i = 0; i < 51; i++) {
+            value = deliveries[i][0];
+            if(value != null && !"null".equals(value)){
+                if (max < Integer.parseInt(value)){
+                    max = Integer.parseInt(value);
+                }
+            }   
+        }
+        return max;
+    }
 
+    public static float total_distance_covered(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        float tol = 0;
+                
+        for (int i = 1; i < 51; i++) {
+            if (deliveries[i][3] != null && !"null".equals(deliveries[i][3].trim())) {
+                tol = tol + Float.parseFloat(deliveries[i][3]);
+                 
+            }   
+        }
+        int answer = (int) (tol * 100);  // Multiply and truncate
+        tol = answer / 100.0f;
         
-
-        return 10;
+        return tol ;
         
     }
 
+    public static float average_delivery_time(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        float tol = 0;
+        int counter = 0 ;
+        
+        for (int i = 1; i < 51; i++) {
+            if (deliveries[i][12] != null && !"null".equals(deliveries[i][12].trim())) {
+                tol = tol + Float.parseFloat(deliveries[i][12]);
+                counter ++ ;
+            }   
+        }
+        tol = tol / counter ;
+        int answer = (int) (tol * 100);  // Multiply and truncate
+        tol = answer / 100.0f;
+                
+        return tol;
+        
+        
+    }
 
-//............................ end of methods call by performance report  .........................
+    public static float total_revenue(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        float tol = 0;
+        
+        
+        for (int i = 1; i < 51; i++) {
+            if (deliveries[i][11] != null && !"null".equals(deliveries[i][11].trim())) {
+                tol = tol + Float.parseFloat(deliveries[i][11]);
+                 
+            }   
+        }
+        int answer = (int) (tol * 100);  // Multiply and truncate
+        tol = answer / 100.0f;
+        
+        return tol ;
+    }
+
+    public static float total_profit(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        float tol = 0;
+        
+        
+        for (int i = 1; i < 51; i++) {
+            if (deliveries[i][10] != null && !"null".equals(deliveries[i][10].trim())) {
+                tol = tol + Float.parseFloat(deliveries[i][10]);
+                 
+            }   
+        }
+        int answer = (int) (tol * 100);  // Multiply and truncate
+        tol = answer / 100.0f;
+        
+        return tol ;
+    }
+    
+    public static float longest_route_completed(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        float large = 0;
+        
+        
+        for (int i = 1; i < 51; i++) {
+            if (deliveries[i][3] != null && !"null".equals(deliveries[i][3].trim())) {
+
+                if( large < Float.parseFloat(deliveries[i][3])){
+                    large = Float.parseFloat(deliveries[i][3]);
+                }
+                 
+            }   
+        }
+        int answer = (int) (large * 100);  // Multiply and truncate
+        large = answer / 100.0f;
+        
+        return large ;
+    }
+
+    public static float shortest_route_completed(String[][] deliveries,int ROWS ,int COLS) {
+        deliver_history_file_operner(deliveries, ROWS, COLS);
+        float shortest = 0;
+        if (deliveries[1][3] != null && !"null".equals(deliveries[1][3].trim())) {
+            shortest = Float.parseFloat(deliveries[1][3]);
+        }
+        
+        for (int i = 1; i < 51; i++) {
+            if (deliveries[i][3] != null && !"null".equals(deliveries[i][3].trim())) {
+
+                if( shortest > Float.parseFloat(deliveries[i][3])){
+                    shortest = Float.parseFloat(deliveries[i][3]);
+                }
+                 
+            }   
+        }
+        int answer = (int) (shortest * 100);  // Multiply and truncate
+        shortest = answer / 100.0f;
+        
+        return shortest ;
+    }
+
+    //............................ end of methods call by performance report  .........................
     
 //............................end of methods call by employer manu.................................
 
@@ -798,7 +928,7 @@ public class index {
                     if(z % loading_1_percent == 0 ){
                         System.out.print("■");
                     }
-                    if(z % 4 == 0){
+                    if(z % 50 == 0){
                         try {
                             Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
                         } catch (InterruptedException e) {
@@ -813,7 +943,7 @@ public class index {
                     if(z % loading_1_percent == 0 ){
                         System.out.print("■");
                     }
-                        if(z % 4 == 0){
+                        if(z % 50 == 0){
                             try {
                                 Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
                             } catch (InterruptedException e) {
@@ -835,7 +965,7 @@ public class index {
                         if(z % loading_1_percent == 0 ){
                             System.out.print("■");
                         } 
-                        if(z % 4 == 0){
+                        if(z % 50 == 0){
                             try {
                                     Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
                                 } catch (InterruptedException e) {
@@ -909,8 +1039,8 @@ public class index {
 
             System.out.println("]"); 
             System.out.println();
-
-            return 100.21f;
+            
+            return distance_from_table;
             }else{
                 System.out.println("Please enter a valid City ID. You can find the correct ID in the first column of the city table displayed during the request process.");
                 return -20; 

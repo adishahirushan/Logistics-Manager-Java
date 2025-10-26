@@ -1,13 +1,13 @@
 0,from,to,distance,Vehicle,Weight,cost,Fuel Used,Fu_Cost,f_cost,profit,C_Charge,Time
-1,Kalutara,Galle,100.21,Van,233.0,3076.347,8.350833,21618.29,24694.637,769.08673,25463.723,1.6701666
-2,Kurunegala,Negombo,100.21,Van,3.0,3007.2021,8.350833,21618.29,24625.492,751.80054,25377.293,1.6701666
-3,Kalutara,Polonnaruwa,100.21,L,2000.0,9620.16,25.0525,194564.6,204184.75,2405.04,206589.8,2.226889
-4,Negombo,Ampara,100.21,Van,2000.0,3607.5603,8.350833,21618.29,25225.85,901.8901,26127.74,1.6701666
-null,null,null,null,null,null,null,null,null,null,null,null,null
-null,null,null,null,null,null,null,null,null,null,null,null,null
-null,null,null,null,null,null,null,null,null,null,null,null,null
-null,null,null,null,null,null,null,null,null,null,null,null,null
-null,null,null,null,null,null,null,null,null,null,null,null,null
+1,Negombo,Nuwara-Eliya,147.0,Van,250.0,4520.25,12.25,46519.375,51039.625,1130.0625,52169.688,2.45
+2,Trincomalee,Ampara,205.0,Lorry,9000.0,31160.0,51.25,814234.4,845394.4,7790.0,853184.4,4.5555553
+3,Matara,Galle,49.0,Truck,200.0,1999.2,8.166667,20675.28,22674.479,499.8,23174.28,0.98
+4,Kalutara,Colombo,54.0,Truck,2222.0,2639.9521,9.0,25110.0,27749.953,659.98804,28409.941,1.08
+5,Tangalle,Polonnaruwa,67.0,Van,416.0,2093.616,5.5833335,9663.82,11757.437,523.404,12280.841,1.1166667
+6,Ampara,Colombo,275.0,Lorry,6000.0,35200.0,68.75,1465234.4,1500434.4,8800.0,1509234.4,6.111111
+7,Colombo,Nuwara-Eliya,138.0,Van,233.0,4236.4624,11.5,40997.5,45233.96,1059.1156,46293.08,2.3
+8,Matara,Puttalam,175.0,Lorry,200.0,14280.0,43.75,593359.4,607639.4,3570.0,611209.4,3.8888888
+9,Negombo,Kalutara,96.0,Truck,200.0,3916.7998,16.0,79360.0,83276.8,979.19995,84256.0,1.92
 null,null,null,null,null,null,null,null,null,null,null,null,null
 null,null,null,null,null,null,null,null,null,null,null,null,null
 null,null,null,null,null,null,null,null,null,null,null,null,null

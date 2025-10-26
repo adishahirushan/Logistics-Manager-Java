@@ -334,7 +334,7 @@ public class index {
             deliver_file_saver(deliveries, ROWS, COLS);
      }    
     
-     public static void deliver_file_saver(String[][] deliveries,int ROWS,int COLS) {
+    public static void deliver_file_saver(String[][] deliveries,int ROWS,int COLS) {
    
         String filePath = "deliveries.txt"; // Adjust path if needed
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
@@ -747,7 +747,7 @@ public class index {
         
     }
 
-     public static void display_distance_customer(String[][] arr_route) {   // display route table
+    public static void display_distance_customer(String[][] arr_route) {   // display route table
         System.out.println();
         System.out.println("______________________");
                             

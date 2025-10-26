@@ -569,7 +569,7 @@ public class index {
     public static float least_destence_finder(String[][] arr_route ,int destination_city_id ,int source_city_id) {
 
         int r = -1;
-        int z = 0;
+        int z = 0;        
         int guess_steps_count;
         
         for (int i = 0; i < 31; i++) {
@@ -583,25 +583,37 @@ public class index {
         guess_steps_count = 1;
         }
 
-        int loading_1_percent = (int)(guess_steps_count / 100f);
+        int loading_1_percent = (int)(guess_steps_count / 60f);
 
 //....................................loader start............................
-        for (int q = 0; q < 19; q++) {
+        for (int q = 0; q < 8; q++) {
+            System.out.print("."); 
+        }
+        System.out.print("Four level distance analizing algorithm loaded");
+        
+        for (int q = 0; q < 8; q++) {
+            System.out.print("."); 
+        }
+        System.out.println();
+
+        for (int q = 0; q < 18; q++) {
             System.out.print("."); 
         }
 
-        System.out.print("Finding for least distence");
+        System.out.print("Finding for least distance");
 
-        for (int q = 0; q < 19; q++) {
+        for (int q = 0; q < 18; q++) {
             System.out.print("."); 
         }
         System.out.println();
         System.out.print("0%");
-        for (int q = 0; q < 60; q++) {
+        for (int q = 0; q < 56; q++) {
             System.out.print("_"); 
                   
         }
         System.out.println("100%");     
+        System.out.print("["); 
+        
 //..................................loader main end............................
         
 
@@ -617,10 +629,18 @@ public class index {
             for (int m = 1; m < r+1 ; m++) {
 
                 float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m]) + Float.parseFloat(arr_route[m][destination_city_id]) ;
-
+                                
                 z++;
-                           
-
+                if(z % loading_1_percent == 0 ){
+                    System.out.print("■");
+                }
+                if(z % 4 == 0){
+                    try {
+                        Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                    } catch (InterruptedException e) {
+                        System.out.println("Interrupted while waiting.");
+                    }
+                }   
                 if(distance_by_loop < distance_from_table){
                     distance_from_table =distance_by_loop ; 
                 }                                
@@ -633,8 +653,18 @@ public class index {
                
                     float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][destination_city_id]) ;
 
-                    
                     z++;
+                    if(z % loading_1_percent == 0 ){
+                        System.out.print("■");
+                    } 
+                    if(z % 4 == 0){
+                        try {
+                                Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                            } catch (InterruptedException e) {
+                                System.out.println("Interrupted while waiting.");
+                            }
+                    }
+                    
 
                     if(distance_by_loop < distance_from_table){
                         distance_from_table =distance_by_loop ; 
@@ -651,8 +681,17 @@ public class index {
                
                         float distance_by_loop = Float.parseFloat(arr_route[source_city_id][m])+ Float.parseFloat(arr_route[m][j]) + Float.parseFloat(arr_route[j][k]) + Float.parseFloat(arr_route[k][destination_city_id]) ;
 
-                        
                         z++;
+                        if(z % loading_1_percent == 0 ){
+                            System.out.print("■");
+                        }
+                        if(z % 4 == 0){
+                            try {
+                                Thread.sleep(1); // Waits for 3000 milliseconds (3 seconds)
+                            } catch (InterruptedException e) {
+                                System.out.println("Interrupted while waiting.");
+                            }
+                        }
                         if(distance_by_loop < distance_from_table){
                             distance_from_table =distance_by_loop ; 
                         }   
@@ -661,7 +700,7 @@ public class index {
             }
 
 
-                
+        System.out.println("]"); 
         System.out.println();
 
         return 100.21f;

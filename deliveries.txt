@@ -1,8 +1,8 @@
 0,from,to,distance,Vehicle,Weight,cost,Fuel Used,Fu_Cost,f_cost,profit,C_Charge,Time
 1,Kalutara,Galle,100.21,Van,233.0,3076.347,8.350833,21618.29,24694.637,769.08673,25463.723,1.6701666
 2,Kurunegala,Negombo,100.21,Van,3.0,3007.2021,8.350833,21618.29,24625.492,751.80054,25377.293,1.6701666
-null,null,null,null,null,null,null,null,null,null,null,null,null
-null,null,null,null,null,null,null,null,null,null,null,null,null
+3,Kalutara,Polonnaruwa,100.21,L,2000.0,9620.16,25.0525,194564.6,204184.75,2405.04,206589.8,2.226889
+4,Negombo,Ampara,100.21,Van,2000.0,3607.5603,8.350833,21618.29,25225.85,901.8901,26127.74,1.6701666
 null,null,null,null,null,null,null,null,null,null,null,null,null
 null,null,null,null,null,null,null,null,null,null,null,null,null
 null,null,null,null,null,null,null,null,null,null,null,null,null

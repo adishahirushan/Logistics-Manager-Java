@@ -226,22 +226,29 @@ public class index {
     }
 
 //............................end of methods call by costomer manu.................................
+    public static void deliver_history_file_operner(String[][] deliveries, int ROWS, int COLS) {
+    String filePath = "deliveries.txt"; // Adjust path if needed
 
+    try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+        String line;
+        int row = 0;
+
+        while ((line = br.readLine()) != null && row < ROWS) {
+            String[] columns = line.split(",", -1); // -1 keeps empty strings
+            for (int col = 0; col < COLS && col < columns.length; col++) {
+                deliveries[row][col] = columns[col].trim(); // Remove extra spaces
+            }
+            row++;
+        }
+    } catch (Exception e) {
+        System.out.println("Error reading file: " + e.getMessage());
+    }
+    }
     public static void load_deliver_history(String[][] deliveries,int ROWS,int COLS,String source_city_name,String destination_city_name,float D,String v_type_name,Float W,float cost,float fuel_Used,float fuel_Used_cost,float total_cost,float profit,float customercharge,float time) {
         
-        String filePath = "deliveries.txt"; // Adjust path if needed
+        
 
-        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            int row = 0;
-
-            while ((line = br.readLine()) != null && row < ROWS) {
-                String[] columns = line.split(",", -1); // -1 keeps empty strings
-                for (int col = 0; col < COLS && col < columns.length; col++) {
-                    deliveries[row][col] = columns[col].trim(); // Remove extra spaces
-                }
-                row++;
-            }
+            deliver_history_file_operner(deliveries, ROWS, COLS);
 
             // Print column titles (row 0)
             //System.out.println("Column Titles:");
@@ -324,7 +331,12 @@ public class index {
                     deliveries[line_write][12] = String.valueOf(time);
                   
             }
-
+            deliver_file_saver(deliveries, ROWS, COLS);
+     }    
+    
+     public static void deliver_file_saver(String[][] deliveries,int ROWS,int COLS) {
+   
+        String filePath = "deliveries.txt"; // Adjust path if needed
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
                 for (int i = 0; i < ROWS; i++) {
                     for (int j = 0; j < COLS; j++) {
@@ -337,14 +349,7 @@ public class index {
             } catch (IOException e) {
                 System.out.println("Error writing file: " + e.getMessage());
             }
-
-        } catch (IOException e) {
-            System.out.println("Error reading file: " + e.getMessage());
-        }
-
-              
         
-
     }
 
 //............................this methods call from employer menu.................................
@@ -395,9 +400,32 @@ public class index {
         
     }
     public static void performance_reports() {
-        System.out.println();
+
+        int tol_del_comp = tol_del_comp();
+
+        System.out.println("========== PERFORMANCE REPORTS ==========");
+        System.out.println("a. Total Deliveries Completed     : " + "");
+        System.out.println("b. Total Distance Covered (km)    : " + "");
+        System.out.println("c. Average Delivery Time (hrs)    : " + "");
+        System.out.println("d. Total Revenue                  : " + "");
+        System.out.println("e. Total Profit                   : " + "");
+        System.out.println("f. Longest Route Completed (km)   : " + "");
+        System.out.println("g. Shortest Route Completed (km)  : " + "");
+        System.out.println("======================================");
+        
+       
+    }
+//............................start of methods call by performance report .........................
+    public static int tol_del_comp() {
+
+        
+
+        return 10;
         
     }
+
+
+//............................ end of methods call by performance report  .........................
     
 //............................end of methods call by employer manu.................................
 
